@@ -1,9 +1,9 @@
-module.exports = function() {
-  var router           = require("koa-router")();
-  var shortcut_dao     = require("../dao/shortcut")();
-  var path             = "/urls";
-  var koaBody = require('koa-body')();
+const router           = require("koa-router")();
+const shortcut_dao     = require("../dao/shortcut")();
+const path             = "/urls";
+const koaBody = require('koa-body')();
 
+module.exports = function(server) {
   /**
    * @method create url
    * @param { url }
@@ -33,5 +33,6 @@ module.exports = function() {
     this.redirect( data[0][0] );
   });
 
-  return router;
+  server.use(router.routes());
+  server.use(router.allowedMethods());
 }

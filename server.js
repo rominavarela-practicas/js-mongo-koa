@@ -1,13 +1,12 @@
 console.log('\nLoading...');
 
-var server = require('koa')();
+const server = require('koa')();
 
 //global
 const servers = require('./servers');
 const SERVER = servers.ws;
 
 //enable cors
-
 server.use(function *(next) {
   for(key in servers)
     if( this.header.origin === servers[key].audience())
@@ -16,7 +15,7 @@ server.use(function *(next) {
   yield next;
 });
 
-// error handler
+//error handler
 server.use(function *(next){
   try
   {
@@ -29,14 +28,7 @@ server.use(function *(next){
 });
 
 //routes
-var routers = [
-  require('./ws/urls')()
-];
-
-for (var i=0 in routers) {
-  server.use(routers[i].routes());
-  server.use(routers[i].allowedMethods());
-}
+require('./ws/urls')(server);
 
 //server on
 server.listen(SERVER.port, function () {
