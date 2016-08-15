@@ -1,8 +1,6 @@
 console.log('\nLoading...');
 
 const server = require('koa')();
-
-//global
 const servers = require('./servers');
 const SERVER = servers.ws;
 

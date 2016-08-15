@@ -15,3 +15,9 @@ module.exports.dev = {
   port: '8080',
   audience: function(){ return this.route + ':' + this.port }
 }
+
+module.exports.mongo = {
+  route: 'mongodb://localhost',
+  port: '27017',
+  audience: function(){ return this.route + ':' + this.port }
+}
