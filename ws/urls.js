@@ -11,7 +11,6 @@ module.exports = function(server) {
    **/
   router.post( path + "/create" , koaBody, function *(next){
     var data = yield shortcut_dao.insertShortcut(this.request.body.url);
-    console.log(data)
     this.body = { success: true , shortcut: data};
   });
 
