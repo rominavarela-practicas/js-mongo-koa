@@ -38,59 +38,25 @@ module.exports = function() {
       );
     });
 
+    /**
+     * @method insertShortcut
+     * @param url string max len=2000
+     **/
+    this.insertShortcut = (url) => new Promise( (resolve,reject) => {
+      SHORTCUT.insert(
+        { url: url, timestamp: new Date() },
+        ( err, data ) =>
+          {
+            err ? reject(err) :
+            SHORTCUT.findOne(
+              { url: url },
+              ( err, data ) => { err ? reject(err) : resolve( norm(data) ); }
+            );
+          }
+      );
+    });
+
   });
-
-
-  //const SHORTCUT = db.get('SHORTCUT');
-
-  /**
-   * @method getAllShortcuts
-   **
-  this.getAllShortcuts = () => SHORTCUT.find();
-
-/*
-  //my sql connection
-  var sql = mysql.createPool({
-    host     : 'localhost',
-    user     : 'root',
-    password : 'toor',
-    database : 'urls'
-  });
-
-  /**
-   * @method getAllShortcuts
-   **
-  this.getAllShortcuts = function()
-  {
-    return sql.query('select * from urls.SHORTCUT');
-  }
-
-  /**
-   * @method getShortcutById
-   * @param id unsigned integer
-   **
-  this.getShortcutById = function(id)
-  {
-      return sql.query('CALL urls.GET_SHORTCUT_BY_ID('+id+')');
-  }
-
-  /**
-   * @method getShortcutByUrl
-   * @param url string max len=2000
-   **
-  this.getShortcutByUrl = function(url)
-  {
-      return sql.query('CALL urls.GET_SHORTCUT_BY_URL("'+url+'")');
-  }
-
-  /**
-   * @method insertShortcut
-   * @param url string max len=2000
-   **
-  this.insertShortcut = function(url)
-  {
-      return sql.query('CALL urls.INSERT_SHORTCUT("'+url+'")');
-  }*/
 
   return this;
 }
