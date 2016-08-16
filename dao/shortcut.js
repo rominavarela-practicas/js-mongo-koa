@@ -1,23 +1,41 @@
 const monk = require('monk');
 
 const mongodb = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectID;
 const servers = require('../servers');
 const SERVER  = servers.mongo;
 //const db      = monk(SERVER.audience()+'/urls');
 
 module.exports = function() {
-  var exports = this;
-
-  mongodb.connect(SERVER.audience()+'/urls', (err, db)=> {
+  mongodb.connect(SERVER.audience()+'/urls', (err, db) => {
     const SHORTCUT = db.collection('SHORTCUT');
+
+    function norm(shortcut){
+      return {
+        id: shortcut._id.valueOf(),
+        url: shortcut.url,
+        timestamp: shortcut.timestamp.toString()
+      }
+    }
 
     /**
      * @method getAllShortcuts
      **/
-    exports.getAllShortcuts = () => new Promise( (resolve,reject) => {
-      SHORTCUT.find({}).toArray(function (err, items) {
-        resolve(items);
-      });
+    this.getAllShortcuts = () => new Promise( (resolve,reject) => {
+      SHORTCUT.find()
+              .map(norm)
+              .toArray( ( err, data ) => { err ? reject(err) : resolve(data); } );
+    });
+
+    /**
+     * @method getShortcutById
+     * @param id unsigned integer
+     **/
+    this.getShortcutById = (id) => new Promise( (resolve,reject) => {
+      SHORTCUT.findOne(
+        { _id: new ObjectId(id) },
+        ( err, data ) => { err ? reject(err) : resolve(data); }
+      );
     });
 
   });

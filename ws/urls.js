@@ -30,7 +30,7 @@ module.exports = function(server) {
    **/
   router.get( path + "/:id" , function *(next){
     var data = yield shortcut_dao.getShortcutById(this.params.id);
-    this.redirect( data[0][0] );
+    this.redirect( data.url );
   });
 
   server.use(router.routes());
