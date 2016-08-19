@@ -1,6 +1,6 @@
-const router           = require("koa-router")();
-const shortcut_dao     = require("../dao/shortcut")();
-const path             = "/urls";
+const router  = require("koa-router")();
+const dao     = require("../dao/shortcut")();
+const path    = "/shortcut";
 const koaBody = require('koa-body')();
 
 module.exports = function(server) {
@@ -9,8 +9,8 @@ module.exports = function(server) {
    * @param { url }
    * @uses post
    **/
-  router.post( path + "/create" , koaBody, function *(next){
-    var data = yield shortcut_dao.insertShortcut(this.request.body.url);
+  router.post( path , koaBody, function *(next){
+    var data = yield dao.insertShortcut(this.request.body.url);
     this.body = { success: true , shortcut: data};
   });
 
@@ -18,8 +18,8 @@ module.exports = function(server) {
    * @method get all
    * @uses get
    **/
-  router.get( path + "/all" , function *(next){
-    var data = yield shortcut_dao.getAllShortcuts();
+  router.get( path + "s" , function *(next){
+    var data = yield dao.getAllShortcuts();
     this.body = { success: true , shortcuts: data};
   });
 
@@ -29,7 +29,7 @@ module.exports = function(server) {
    * This method redirets to the url described by the id
    **/
   router.get( path + "/:id" , function *(next){
-    var data = yield shortcut_dao.getShortcutById(this.params.id);
+    var data = yield dao.getShortcutById(this.params.id);
     this.redirect( data.url );
   });
 
