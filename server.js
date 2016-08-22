@@ -26,7 +26,7 @@ server.use(function *(next){
 });
 
 //routes
-require('./ws/urls')(server);
+require('./ws/shortcut')(server);
 
 //server on
 server.listen(SERVER.port, function () {
