@@ -32,6 +32,11 @@ module.exports = function(server) {
     var data = yield dao.getShortcutById(this.params.id);
     this.redirect( data.url );
   });
+  // direct access
+  router.get( "/:id" , function *(next){
+    var data = yield dao.getShortcutById(this.params.id);
+    this.redirect( data.url );
+  });
 
   server.use(router.routes());
   server.use(router.allowedMethods());
