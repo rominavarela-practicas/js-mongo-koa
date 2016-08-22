@@ -4,7 +4,7 @@
   "description": "URL Shortcuts web services",
   "main": "main.js",
   "scripts": {
-    "server": "node --harmony ./server.js"
+    "server": "nvm use 4; node --harmony ./server.js"
   },
   "repository": {
     "type": "git",
