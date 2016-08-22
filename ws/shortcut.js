@@ -11,16 +11,16 @@ module.exports = function(server) {
    **/
   router.post( path , koaBody, function *(next){
     var data = yield dao.insertShortcut(this.request.body.url);
-    this.body = { success: true , shortcut: data};
+    this.body = data;
   });
 
   /**
    * @method get all
    * @uses get
    **/
-  router.get( path + "s" , function *(next){
+  router.get( path , function *(next){
     var data = yield dao.getAllShortcuts();
-    this.body = { success: true , shortcuts: data};
+    this.body = data;
   });
 
   /**
@@ -30,8 +30,9 @@ module.exports = function(server) {
    **/
   router.get( path + "/:id" , function *(next){
     var data = yield dao.getShortcutById(this.params.id);
-    this.redirect( data.url );
+    this.body = data;
   });
+
   // direct access
   router.get( "/:id" , function *(next){
     var data = yield dao.getShortcutById(this.params.id);
