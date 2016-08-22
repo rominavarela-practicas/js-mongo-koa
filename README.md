@@ -10,14 +10,14 @@
 
 ## Setup
 
- * sudo npm install -g webpack
+ > sudo npm install -g webpack
 
- * sudo npm install -g bower
+ > sudo npm install -g bower
 
- * npm install
+ > npm install
 
- * bower install
+ > bower install
 
 ## Run
 
- * npm run server
+ > mongod &; npm run server
